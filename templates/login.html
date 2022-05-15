@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="{{ url_for('static', filename='login.css') }}" rel="stylesheet">
+    <title>Main</title>
+</head>
+<body>
+<div class="container" id="container">
+	<div class="form-container sign-up-container">
+		<form id="signupform" class="form-horizontal" role="form" method="POST" action="/register">
+			<h1>Create Account</h1>
+
+            {% if error == "alreadyexist" %}
+			    <div class="alert alert-warning alert-dismissible fade in" >
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Whoops!</strong> Username already exists.
+                </div>
+            {% endif %}			
+            <input class="form-control" type="text" name="firstname" placeholder="First Name" required="True"/>
+            <input class="form-control" type="text" name="lastname" placeholder="Last Name"/>
+			<input class="form-control" type="email" name="username" placeholder="Email" required="True"/>
+			<input class="form-control" type="password" name="password" placeholder="Password" required="True"/>
+			<button id="btn-signup" type="submit" name="register" value="Register" >Sign Up</button>
+		</form>
+	</div>
+	<div class="form-container sign-in-container">
+		<form id="loginform" class="form-horizontal" role="form" action="/login" method = "POST">
+			<h1>Sign in</h1>
+            {% if error == "notfound" %}
+			<div class="alert alert-warning alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Whoops!</strong> Incorrect username or password.
+            </div>
+            <script>$('.alert').alert()</script>
+            {% endif %}
+			<input class="form-control" type="email" name = "username" placeholder="Email" required="True"/>
+			<input class="form-control" type="password" name="password" placeholder="Password" required = "True"/>
+			<button id ="btn-signin" type="submit" name="login" value="Login" >Log In</button>
+		</form>
+	</div>
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Welcome Back!</h1>
+				<p>Already have an account?</p>
+				<button class="ghost" id="signIn">Log In</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1>New Here!</h1>
+				<p>Register Now</p>
+				<button class="ghost" id="signUp">Register</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+    const signUpButton = document.getElementById('signUp');
+const signInButton = document.getElementById('signIn');
+const container = document.getElementById('container');
+
+signUpButton.addEventListener('click', () => {
+	container.classList.add("right-panel-active");
+});
+
+signInButton.addEventListener('click', () => {
+	container.classList.remove("right-panel-active");
+});
+</script>
+
+</body>
+</html>
